@@ -60,5 +60,17 @@ namespace Advent2019
             }
             return ReturnList;
         }
+        public List<int> parseListOfInteger(string input)
+        {
+            List<int> ReturnList = new List<int>();
+            MatchCollection Matches = Regex.Matches(input, @"-?\d+");
+            foreach (Match m in Matches)
+            {
+                int ParseInt = 0;
+                Int32.TryParse(m.Value, out ParseInt);
+                ReturnList.Add(ParseInt);
+            }
+            return ReturnList;
+        }
     }
 }
