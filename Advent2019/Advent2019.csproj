@@ -88,6 +88,7 @@
     <Compile Include="Day23.cs" />
     <Compile Include="Day24.cs" />
     <Compile Include="Day25.cs" />
+    <Compile Include="IntMachine.cs" />
     <Compile Include="MainView.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

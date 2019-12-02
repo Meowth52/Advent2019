@@ -9,25 +9,10 @@ namespace Advent2019
 {
     public class Day02 : Day
     {
-        List<int> _instructions;
-        Dictionary<long, long> RawInstructions;
+        List<int> Instructions;
         public Day02(string _input) : base(_input)
         {
-            _instructions = this.parseListOfInteger(_input);
-            RawInstructions = new Dictionary<long, long>();
-            int Counter = 0;
-            int LargestNumber = 0;
-            foreach (int i in _instructions)
-            {
-                RawInstructions.Add(Counter, i);
-                if (i > LargestNumber)
-                    LargestNumber = i;
-                Counter++;
-            }
-            for (int i = RawInstructions.Count; i <= 100000; i++)
-            {
-                RawInstructions.Add(i, 0);
-            }
+            Instructions = this.parseListOfInteger(_input);
         }
         public override Tuple<string, string> getResult()
         {
@@ -37,54 +22,24 @@ namespace Advent2019
         }
         public override string getPartOne()
         {
-            return GetPartOneInt(12, 2).ToString();
+        IntMachine _intMachine = new IntMachine(Instructions, 4);
+            _intMachine.Day2Offset(12, 2);
+            return _intMachine.Run().ToString();
         }
         public override string getPartTwo()
         {
-            int IsThisIt = 0;
-            while (true)
+            for (int Noun = 0; Noun < Instructions.Count; Noun++)
             {
-                try
+                for (int Verb = 0; Verb < Instructions.Count; Verb++)
                 {
-                    int attempt = (int)GetPartOneInt(IsThisIt, 54);
-                    if (attempt == 19690720)
-                        return IsThisIt.ToString();
+                    IntMachine _intMachine = new IntMachine(Instructions, 4);
+                    _intMachine.Day2Offset(Noun, Verb);
+                    if (_intMachine.Run() == 19690720)
+                        return (Noun * 100 + Verb).ToString();
                 }
-                catch
-                {
-
-                }
-                IsThisIt++;
+                Noun++;
             }
             return "0";
-        }
-        public long GetPartOneInt(int Noun, int Verb)
-        {
-            Dictionary<long, long> Instructions = new Dictionary<long, long>(RawInstructions);
-            Instructions[1] = Noun;
-            Instructions[2] = Verb;
-            int CurrentPosition = 0;
-            bool GetOut = false;
-            while (!GetOut) //Brr
-            {
-                long Case = Instructions[CurrentPosition];
-                switch (Case)
-                {
-                    case 1:
-                        Instructions[Instructions[CurrentPosition + 3]] = Instructions[Instructions[CurrentPosition + 1]] + Instructions[Instructions[CurrentPosition + 2]];
-                        break;
-                    case 2:
-                        Instructions[ Instructions[CurrentPosition + 3]] = Instructions[Instructions[CurrentPosition + 1]] * Instructions[Instructions[CurrentPosition + 2]];
-                        break;
-                    case 99:
-                        GetOut = true;
-                        break;
-                    default:
-                        break;
-                }
-                CurrentPosition += 4;
-            }
-            return Instructions[0];
         }
     }
 }
