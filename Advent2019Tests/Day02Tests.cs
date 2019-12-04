@@ -14,7 +14,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_1()
         {
-            Day _day02 = new Day02("1,9,10,3,2,3,11,0,99,30,40,50");
+            Day02 _day02 = new Day02("1,9,10,3,2,3,11,0,99,30,40,50");
             string PartOneExpected = "3500";
             string Actual = _day02.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -22,7 +22,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_2()
         {
-            Day _day02 = new Day02("1,0,0,0,99");
+            Day02 _day02 = new Day02("1,0,0,0,99");
             string PartOneExpected = "2";
             string Actual = _day02.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -30,7 +30,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_3()
         {
-            Day _day02 = new Day02("2,3,0,3,99");
+            Day02 _day02 = new Day02("2,3,0,3,99");
             string PartOneExpected = "2";
             string Actual = _day02.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -38,7 +38,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_4()
         {
-            Day _day02 = new Day02("2,4,4,5,99,0");
+            Day02 _day02 = new Day02("2,4,4,5,99,0");
             string PartOneExpected = "2";
             string Actual = _day02.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -46,7 +46,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_5()
         {
-            Day _day02 = new Day02("1,1,1,4,99,5,6,0,99");
+            Day02 _day02 = new Day02("1,1,1,4,99,5,6,0,99");
             string PartOneExpected = "30";
             string Actual = _day02.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);

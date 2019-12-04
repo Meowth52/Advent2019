@@ -19,7 +19,7 @@ namespace Advent2019
             int Sum2 = 0;
             return Tuple.Create(getPartOne(), getPartTwo());
         }
-        public override string getPartOne()
+        public string getPartOne()
         {
             int ReturnValue = 0;
             foreach(int i in Instructions)
@@ -28,7 +28,7 @@ namespace Advent2019
             }
             return ReturnValue.ToString();
         }
-        public override string getPartTwo()
+        public string getPartTwo()
         {
             int ReturnValue = 0;
             foreach (int i in Instructions)

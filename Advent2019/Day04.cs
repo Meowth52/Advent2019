@@ -82,13 +82,5 @@ namespace Advent2019
             }
             return ReturnValue;
         }
-        public override string getPartOne()
-        {
-            throw new NotImplementedException();
-        }
-        public override string getPartTwo()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

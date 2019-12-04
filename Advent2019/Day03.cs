@@ -50,14 +50,6 @@ namespace Advent2019
                 _wire.Follow(s, ref Grid, ref Crossings);
             }
         }
-        public override string getPartOne()
-        {
-            throw new NotImplementedException();
-        }
-        public override string getPartTwo()
-        {
-            throw new NotImplementedException();
-        }
         public class Wire
         {
             Coordinate CurrentPosition;

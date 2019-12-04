@@ -14,7 +14,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_1()
         {
-            Day _day01 = new Day01("12");
+            Day01 _day01 = new Day01("12");
             string PartOneExpected = "2";
             string Actual = _day01.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -22,7 +22,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_2()
         {
-            Day _day01 = new Day01("14");
+            Day01 _day01 = new Day01("14");
             string PartOneExpected = "2";
             string Actual = _day01.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -30,7 +30,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_3()
         {
-            Day _day01 = new Day01("1969");
+            Day01 _day01 = new Day01("1969");
             string PartOneExpected = "654";
             string Actual = _day01.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -38,7 +38,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part1_4()
         {
-            Day _day01 = new Day01("100756");
+            Day01 _day01 = new Day01("100756");
             string PartOneExpected = "33583";
             string Actual = _day01.getPartOne();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -46,7 +46,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part2_1()
         {
-            Day _day01 = new Day01("14");
+            Day01 _day01 = new Day01("14");
             string PartOneExpected = "2";
             string Actual = _day01.getPartTwo();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -54,7 +54,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part2_2()
         {
-            Day _day01 = new Day01("1969");
+            Day01 _day01 = new Day01("1969");
             string PartOneExpected = "966";
             string Actual = _day01.getPartTwo();
             Assert.AreEqual(PartOneExpected, Actual);
@@ -62,7 +62,7 @@ namespace Advent2019.Tests
         [TestMethod()]
         public void Part2_3()
         {
-            Day _day01 = new Day01("100756");
+            Day01 _day01 = new Day01("100756");
             string PartOneExpected = "50346";
             string Actual = _day01.getPartTwo();
             Assert.AreEqual(PartOneExpected, Actual);

@@ -20,13 +20,13 @@ namespace Advent2019
             int Sum2 = 0;
             return Tuple.Create(getPartOne(), getPartTwo());
         }
-        public override string getPartOne()
+        public string getPartOne()
         {
         IntMachine _intMachine = new IntMachine(Instructions, 4);
             _intMachine.Day2Offset(12, 2);
             return _intMachine.Run().ToString();
         }
-        public override string getPartTwo()
+        public string getPartTwo()
         {
             for (int Noun = 0; Noun < Instructions.Count; Noun++)
             {
