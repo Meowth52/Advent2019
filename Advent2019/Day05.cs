@@ -9,14 +9,19 @@ namespace Advent2019
 {
     public class Day05 : Day
     {
+        List<int> Instructions;
         public Day05(string _input) : base(_input)
         {
-
+            Instructions = this.parseListOfInteger(_input);
         }
         public override Tuple<string, string> getResult()
         {
-            int Sum = 0;
-            int Sum2 = 0;
+            IntMachine Diagnostics = new IntMachine(Instructions, 1);
+            Diagnostics.Run();
+            int Sum = Diagnostics.Outputs.Last();
+            IntMachine Diagnostics2 = new IntMachine(Instructions, 5);
+            Diagnostics2.Run();
+            int Sum2 = Diagnostics2.Outputs.Last();
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
     }
