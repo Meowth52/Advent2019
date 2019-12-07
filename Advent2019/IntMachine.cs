@@ -9,11 +9,13 @@ namespace Advent2019
     class IntMachine
     {
         Dictionary<int, int> Memory;
-        int Input;
+        List<int> Input;
+        int InputIndex = 0;
         public List<int> Outputs;
         public IntMachine(List<int> _memory, int _input)
         {
-            Input = _input;
+            Input = new List<int>();
+            Input.Add(_input);
             Memory = new Dictionary<int, int>();
             for (int i = 0; i < _memory.Count; i++)
             {
@@ -66,7 +68,8 @@ namespace Advent2019
                         i += 4;
                         break;
                     case 3:
-                        Memory[OpCode[2]] = Input;
+                        Memory[OpCode[2]] = Input[InputIndex];
+                        InputIndex++;
                         i += 2;
                         break;
                     case 4:
@@ -119,6 +122,10 @@ namespace Advent2019
                 ReturnValue.Add(Next);
             }
             return ReturnValue;
+        }
+        public void AddArgument(int i)
+        {
+            Input.Add(i);
         }
     }
 }

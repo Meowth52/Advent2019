@@ -18,7 +18,7 @@ namespace Advent2019
 {
     public partial class MainWindow : Window
     {
-        int LastDay = 6;
+        int LastDay = 7;
         public int ChoosenDay;
         private readonly MainView _mainView;
         public MainWindow()
