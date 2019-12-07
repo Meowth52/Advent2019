@@ -12,6 +12,7 @@ namespace Advent2019
         List<int> Input;
         int InputIndex = 0;
         public List<int> Outputs;
+        int Step = 0;
         public IntMachine(List<int> _memory, int _input)
         {
             Input = new List<int>();
@@ -30,26 +31,24 @@ namespace Advent2019
         }
         public int Run()
         {
-            bool GetOut = false;
-            int i = 0;
-            while(!GetOut)
+            while(true)
             {
-                if (!Memory.ContainsKey(i + 2))
-                    Memory.Add(i + 2, 0);
-                List<int> OpCode = this.IntToList(Memory[i]);
-                if (i == 20)
-                    ;
+                if (!Memory.ContainsKey(Step + 2))
+                    Memory.Add(Step + 2, 0);
+                List<int> OpCode = this.IntToList(Memory[Step]);
+                //if (Step == 20)
+                //    ;
                 for(int code = 2; code <5; code++)
                 {
-                    if (i + code + 1 > Memory.Count - 1)
+                    if (Step + code + 1 > Memory.Count - 1)
                         break;
                     switch (OpCode[code])
                     {
                         case 0:
-                            OpCode[code] = Memory[i+code-1];
+                            OpCode[code] = Memory[Step+code-1];
                             break;
                         case 1:
-                            OpCode[code] = i+code-1;
+                            OpCode[code] = Step+code-1;
                             break;
                         default:
                             return -1; //Doh
@@ -61,44 +60,45 @@ namespace Advent2019
                 {
                     case 1:
                         Memory[OpCode[4]] = Memory[OpCode[2]] + Memory[OpCode[3]];
-                        i += 4;
+                        Step += 4;
                         break;
                     case 2:
                         Memory[OpCode[4]] = Memory[OpCode[2]] * Memory[OpCode[3]];
-                        i += 4;
+                        Step += 4;
                         break;
                     case 3:
                         Memory[OpCode[2]] = Input[InputIndex];
                         InputIndex++;
-                        i += 2;
+                        Step += 2;
                         break;
                     case 4:
                         Outputs.Add(Memory[OpCode[2]]);
-                        i += 2;
+                        Step += 2;
+                        return -1;
                         break;
                     case 5:
                         if(Memory[OpCode[2]] != 0)
-                            i = Memory[OpCode[3]];
+                            Step = Memory[OpCode[3]];
                         else
-                            i += 3;
+                            Step += 3;
                         break;
                     case 6:
                         if (Memory[OpCode[2]] == 0)
-                            i = Memory[OpCode[3]];
+                            Step = Memory[OpCode[3]];
                         else
-                            i += 3;
+                            Step += 3;
                         break;
                     case 7:
                         if (Memory[OpCode[2]] < Memory[OpCode[3]])
                             Memory[OpCode[4]] = 1;
                         else Memory[OpCode[4]] = 0;
-                        i += 4;
+                        Step += 4;
                         break;
                     case 8:
                         if (Memory[OpCode[2]] == Memory[OpCode[3]])
                             Memory[OpCode[4]] = 1;
                         else Memory[OpCode[4]] = 0;
-                        i += 4;
+                        Step += 4;
                         break;
                     case 9:
                         return Memory[0];
@@ -106,8 +106,6 @@ namespace Advent2019
                     default:
                         break; //Uh oh
                 }
-                if (GetOut)
-                    break;
             }
             return Memory[0];
         }

@@ -17,7 +17,11 @@ namespace Advent2019
         public override Tuple<string, string> getResult()
         {
             IntMachine Diagnostics = new IntMachine(Instructions, 1);
-            Diagnostics.Run();
+            int Value = -1;
+            while (Value == -1)
+            {
+                Value = Diagnostics.Run();
+            }
             int Sum = Diagnostics.Outputs.Last();
             IntMachine Diagnostics2 = new IntMachine(Instructions, 5);
             Diagnostics2.Run();
