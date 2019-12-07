@@ -8,16 +8,16 @@ namespace Advent2019
 {
     class IntMachine
     {
-        Dictionary<int, int> Memory;
+        Dictionary<long, long> Memory;
         List<int> Input;
         int InputIndex = 0;
         public List<int> Outputs;
-        int Step = 0;
+        long Step = 0;
         public IntMachine(List<int> _memory, int _input)
         {
             Input = new List<int>();
             Input.Add(_input);
-            Memory = new Dictionary<int, int>();
+            Memory = new Dictionary<long, long>();
             for (int i = 0; i < _memory.Count; i++)
             {
                 Memory.Add(i, _memory[i]);
@@ -35,7 +35,7 @@ namespace Advent2019
             {
                 if (!Memory.ContainsKey(Step + 2))
                     Memory.Add(Step + 2, 0);
-                List<int> OpCode = this.IntToList(Memory[Step]);
+                List<long> OpCode = this.IntToList(Memory[Step]);
                 //if (Step == 20)
                 //    ;
                 for(int code = 2; code <5; code++)
@@ -55,7 +55,7 @@ namespace Advent2019
                             break;
                     }
                 }
-                int Case = OpCode[0];
+                int Case = (int)OpCode[0];
                 switch (Case)
                 {
                     case 1:
@@ -72,7 +72,7 @@ namespace Advent2019
                         Step += 2;
                         break;
                     case 4:
-                        Outputs.Add(Memory[OpCode[2]]);
+                        Outputs.Add((int)Memory[OpCode[2]]);
                         Step += 2;
                         return -1;
                         break;
@@ -101,22 +101,22 @@ namespace Advent2019
                         Step += 4;
                         break;
                     case 9:
-                        return Memory[0];
+                        return (int)Memory[0];
                         break;
                     default:
                         break; //Uh oh
                 }
             }
-            return Memory[0];
+            return (int)Memory[0];
         }
-        public List<int> IntToList(int In)
+        public List<long> IntToList(long In)
         {
             string IntAsString = In.ToString("D5");
-            List<int> ReturnValue = new List<int>();
-            for(int c = IntAsString.Length-1;c>=0;c--)
+            List<long> ReturnValue = new List<long>();
+            for(long c = IntAsString.Length-1;c>=0;c--)
             {
-                int Next = 0;
-                Int32.TryParse(IntAsString[c].ToString(), out Next);
+                long Next = 0;
+                Int64.TryParse(IntAsString[(int)c].ToString(), out Next);
                 ReturnValue.Add(Next);
             }
             return ReturnValue;
