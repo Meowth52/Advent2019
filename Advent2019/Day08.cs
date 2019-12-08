@@ -70,10 +70,10 @@ namespace Advent2019
                         switch (Pixel)
                         {
                             case 0:
-                                FinalImage[x, y] = "#";
+                                FinalImage[x, y] = " ";
                                 break;
                             case 1:
-                                FinalImage[x, y] = " ";
+                                FinalImage[x, y] = "#";
                                 break;
                             case 2:
                                 ;
