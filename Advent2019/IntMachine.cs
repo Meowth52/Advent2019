@@ -13,6 +13,7 @@ namespace Advent2019
         int InputIndex = 0;
         public List<int> Outputs;
         long Step = 0;
+        long RelativeStep;
         public IntMachine(List<int> _memory, int _input)
         {
             Input = new List<int>();
@@ -31,28 +32,44 @@ namespace Advent2019
         }
         public int Run()
         {
-            while(true)
+            while (true)
             {
                 if (!Memory.ContainsKey(Step + 2))
+                {
+                    Memory.Add(Step + 1, 0);
                     Memory.Add(Step + 2, 0);
+                    Memory.Add(Step + 3, 0);
+                }
                 List<long> OpCode = this.IntToList(Memory[Step]);
                 //if (Step == 20)
                 //    ;
-                for(int code = 2; code <5; code++)
+                for (int code = 2; code < 5; code++)
                 {
                     if (Step + code + 1 > Memory.Count - 1)
                         break;
                     switch (OpCode[code])
                     {
                         case 0:
-                            OpCode[code] = Memory[Step+code-1];
+                            OpCode[code] = Memory[Step + code - 1];
                             break;
                         case 1:
-                            OpCode[code] = Step+code-1;
+                            OpCode[code] = Step + code - 1;
+                            break;
+                        case 2:
+                            if (!Memory.ContainsKey(RelativeStep + code - 1))
+                                Memory.Add(RelativeStep + code - 1, 0);
+                            OpCode[code] = Memory[RelativeStep + code - 1];
                             break;
                         default:
                             return -1; //Doh
                             break;
+                    }
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    if (!Memory.ContainsKey(OpCode[i]))
+                    {
+                        Memory.Add(OpCode[i], 0);
                     }
                 }
                 int Case = (int)OpCode[0];
@@ -77,7 +94,7 @@ namespace Advent2019
                         return -1;
                         break;
                     case 5:
-                        if(Memory[OpCode[2]] != 0)
+                        if (Memory[OpCode[2]] != 0)
                             Step = Memory[OpCode[3]];
                         else
                             Step += 3;
@@ -101,7 +118,10 @@ namespace Advent2019
                         Step += 4;
                         break;
                     case 9:
-                        return (int)Memory[0];
+                        if (OpCode[1] == 9)
+                            return (int)Memory[0];
+                        RelativeStep += Memory[OpCode[2]];
+                        Step += 2;
                         break;
                     default:
                         break; //Uh oh
@@ -113,7 +133,7 @@ namespace Advent2019
         {
             string IntAsString = In.ToString("D5");
             List<long> ReturnValue = new List<long>();
-            for(long c = IntAsString.Length-1;c>=0;c--)
+            for (long c = IntAsString.Length - 1; c >= 0; c--)
             {
                 long Next = 0;
                 Int64.TryParse(IntAsString[(int)c].ToString(), out Next);
