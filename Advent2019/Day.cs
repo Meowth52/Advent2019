@@ -65,9 +65,17 @@ namespace Advent2019
             MatchCollection Matches = Regex.Matches(input, @"-?\d+");
             foreach (Match m in Matches)
             {
-                int ParseInt = 0;
-                Int32.TryParse(m.Value, out ParseInt);
-                ReturnList.Add(ParseInt);
+                ReturnList.Add(Int32.Parse(m.Value));
+            }
+            return ReturnList;
+        }
+        public List<long> parseListOfLong(string input)
+        {
+            List<long> ReturnList = new List<long>();
+            MatchCollection Matches = Regex.Matches(input, @"-?\d+");
+            foreach (Match m in Matches)
+            {
+                ReturnList.Add(Int64.Parse(m.Value));
             }
             return ReturnList;
         }

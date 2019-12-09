@@ -43,7 +43,7 @@ namespace Advent2019
                     IntMachine Amp = new IntMachine(Instructions, PhaseSequence[i]);
                     Amp.AddArgument(IntPut);
                     Amp.Run();
-                    IntPut = Amp.Outputs.Last();
+                    IntPut = (int)Amp.Outputs.Last();
                 }
                 if (IntPut > ReturnValue)
                     ReturnValue = IntPut;
@@ -80,7 +80,7 @@ namespace Advent2019
                     {
                         Amps[i].AddArgument(IntPut);
                         Done = Amps[i].Run();
-                        IntPut = Amps[i].Outputs.Last();
+                        IntPut = (int)Amps[i].Outputs.Last();
                     }                    
                 }
                 if (IntPut > ReturnValue)

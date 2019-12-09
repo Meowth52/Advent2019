@@ -11,10 +11,21 @@ namespace Advent2019
         Dictionary<long, long> Memory;
         List<int> Input;
         int InputIndex = 0;
-        public List<int> Outputs;
+        public List<long> Outputs;
         long Step = 0;
         long RelativeStep;
+        public IntMachine(List<long> _memory, int _input)
+        {
+            Construct(_memory, _input);
+        }
         public IntMachine(List<int> _memory, int _input)
+        {
+            List<long> LongMem = new List<long>();
+            foreach (int i in _memory)
+                LongMem.Add((long)i);
+            Construct(LongMem, _input);
+        }
+        public void Construct(List<long> _memory, int _input)
         {
             Input = new List<int>();
             Input.Add(_input);
@@ -23,7 +34,7 @@ namespace Advent2019
             {
                 Memory.Add(i, _memory[i]);
             }
-            Outputs = new List<int>();
+            Outputs = new List<long>();
         }
         public void Day2Offset(int Noun, int Verb)
         {
@@ -34,11 +45,10 @@ namespace Advent2019
         {
             while (true)
             {
-                if (!Memory.ContainsKey(Step + 2))
+                for (int i = 1;i<4;i++)
                 {
-                    Memory.Add(Step + 1, 0);
-                    Memory.Add(Step + 2, 0);
-                    Memory.Add(Step + 3, 0);
+                    if (!Memory.ContainsKey(Step + i))
+                    Memory.Add(Step + i, 0);
                 }
                 List<long> OpCode = this.IntToList(Memory[Step]);
                 //if (Step == 20)
@@ -56,9 +66,9 @@ namespace Advent2019
                             OpCode[code] = Step + code - 1;
                             break;
                         case 2:
-                            if (!Memory.ContainsKey(RelativeStep + code - 1))
-                                Memory.Add(RelativeStep + code - 1, 0);
-                            OpCode[code] = Memory[RelativeStep + code - 1];
+                            if (!Memory.ContainsKey(RelativeStep + Memory[Step + code - 1]))
+                                Memory.Add(RelativeStep + Memory[Step + code - 1], 0);
+                            OpCode[code] = RelativeStep + Memory[Step + code - 1];
                             break;
                         default:
                             return -1; //Doh
@@ -89,7 +99,7 @@ namespace Advent2019
                         Step += 2;
                         break;
                     case 4:
-                        Outputs.Add((int)Memory[OpCode[2]]);
+                        Outputs.Add(Memory[OpCode[2]]);
                         Step += 2;
                         return -1;
                         break;

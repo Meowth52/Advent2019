@@ -22,10 +22,10 @@ namespace Advent2019
             {
                 Value = Diagnostics.Run();
             }
-            int Sum = Diagnostics.Outputs.Last();
+            long Sum = Diagnostics.Outputs.Last();
             IntMachine Diagnostics2 = new IntMachine(Instructions, 5);
             Diagnostics2.Run();
-            int Sum2 = Diagnostics2.Outputs.Last();
+            long Sum2 = Diagnostics2.Outputs.Last();
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
     }
