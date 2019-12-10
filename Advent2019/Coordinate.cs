@@ -70,6 +70,10 @@ namespace Advent2019
         {
             return Math.Abs(this.x - coo.x) + Math.Abs(this.y - coo.y);
         }
+        public Coordinate RelativePosition(Coordinate coo)
+        {
+            return new Coordinate(this.x - coo.x, this.y - coo.y);
+        }
         public override string ToString()
         {
             return x.ToString() + "," + y.ToString();
