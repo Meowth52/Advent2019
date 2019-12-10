@@ -32,20 +32,22 @@ namespace Advent2019
                 int AsteroidCount = 0;
                 Coordinate CurrentPosition = new Coordinate(c);
                 foreach (Coordinate a in Asteroids)
-                {
-                    bool BadAsteroid = false;
-                    Coordinate RelativePosition = a.RelativePosition(CurrentPosition);
-                    Coordinate Angle = GetAngle(RelativePosition);
-                    RelativePosition.AddTo(Angle);
-                    while (RelativePosition != CurrentPosition)
+                    if (c != a)
                     {
-                        if (Asteroids.Contains(RelativePosition))
-                            BadAsteroid = true;
-                        RelativePosition.AddTo(Angle);
+                        bool BadAsteroid = false;
+                        Coordinate OtherAstroid = new Coordinate(a);
+                        Coordinate RelativePosition = a.RelativePosition(CurrentPosition);
+                        Coordinate Angle = GetAngle(RelativePosition);
+                        OtherAstroid.AddTo(Angle);
+                        while (!OtherAstroid.IsOn(CurrentPosition))
+                        {
+                            if (Asteroids.Contains(OtherAstroid))
+                                BadAsteroid = true;
+                            OtherAstroid.AddTo(Angle);
+                        }
+                        if (!BadAsteroid)
+                            AsteroidCount++;
                     }
-                    if (!BadAsteroid)
-                        AsteroidCount++;
-                }
                 if (AsteroidCount > Sum)
                     Sum = AsteroidCount;
             }
@@ -56,11 +58,11 @@ namespace Advent2019
         {
             int Biggest = Math.Max(Math.Abs(c.x), Math.Abs(c.y));
             Coordinate ReturnCoordinate = c;
-            for (int i = 1; i <= Biggest; i++)
+            for (int i = Biggest; i >= 1; i--)
             {
                 if (c.x % i == 0 && c.y % i == 0)
                 {
-                    ReturnCoordinate = new Coordinate(c.x / i, c.y / i);
+                    ReturnCoordinate = new Coordinate((c.x / i)*-1, (c.y / i)*-1);
                     break;
                 }
             }
