@@ -27,6 +27,7 @@ namespace Advent2019
         public override Tuple<string, string> getResult()
         {
             int Sum = 0;
+            Coordinate WinningAsteroid = new Coordinate(0, 0);
             foreach (Coordinate c in Asteroids)
             {
                 int AsteroidCount = 0;
@@ -49,10 +50,29 @@ namespace Advent2019
                             AsteroidCount++;
                     }
                 if (AsteroidCount > Sum)
+                {
+                    WinningAsteroid = new Coordinate(c);
                     Sum = AsteroidCount;
+                }
             }
+            Dictionary<double, Coordinate> AllTheAngles = new Dictionary<double, Coordinate>();
+
+            foreach (Coordinate a in Asteroids)
+                if (WinningAsteroid != a)
+                {
+                    bool BadAsteroid = false;
+                    Coordinate OtherAstroid = new Coordinate(a);
+                    Coordinate RelativePosition = a.RelativePosition(WinningAsteroid);
+                    Coordinate Angle = GetAngle(RelativePosition);
+                    if (AllTheAngles.ContainsKey(EnumerateAngle(Angle)))
+                        AllTheAngles.Add(EnumerateAngle(Angle), Angle);
+                }
             int Sum2 = 0;
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
+        }
+        public double EnumerateAngle(Coordinate angle)
+        {
+            return Math.Tan(angle.x / angle.y);
         }
         public Coordinate GetAngle(Coordinate c)
         {
@@ -62,7 +82,7 @@ namespace Advent2019
             {
                 if (c.x % i == 0 && c.y % i == 0)
                 {
-                    ReturnCoordinate = new Coordinate((c.x / i)*-1, (c.y / i)*-1);
+                    ReturnCoordinate = new Coordinate((c.x / i) * -1, (c.y / i) * -1);
                     break;
                 }
             }
