@@ -55,24 +55,39 @@ namespace Advent2019
                     Sum = AsteroidCount;
                 }
             }
-            Dictionary<double, Coordinate> AllTheAngles = new Dictionary<double, Coordinate>();
-
-            foreach (Coordinate a in Asteroids)
-                if (WinningAsteroid != a)
-                {
-                    bool BadAsteroid = false;
-                    Coordinate OtherAstroid = new Coordinate(a);
-                    Coordinate RelativePosition = a.RelativePosition(WinningAsteroid);
-                    Coordinate Angle = GetAngle(RelativePosition);
-                    if (AllTheAngles.ContainsKey(EnumerateAngle(Angle)))
-                        AllTheAngles.Add(EnumerateAngle(Angle), Angle);
-                }
             int Sum2 = 0;
+            int AsteroidsKilled = 0;
+            while (AsteroidsKilled<200)
+            {
+            SortedDictionary<double, Coordinate> AllTheAngles = new SortedDictionary<double, Coordinate>(); // cthulhu fhtagn
+                foreach (Coordinate a in Asteroids)
+                    if (WinningAsteroid != a)
+                    {
+                        bool BadAsteroid = false;
+                        Coordinate OtherAstroid = new Coordinate(a);
+                        Coordinate RelativePosition = a.RelativePosition(WinningAsteroid);
+                        Coordinate Angle = GetAngle(RelativePosition);
+                        if (!AllTheAngles.ContainsKey(EnumerateAngle(Angle)))
+                            AllTheAngles.Add(EnumerateAngle(Angle), a);
+                        else if (AllTheAngles[EnumerateAngle(Angle)].ManhattanDistance(WinningAsteroid) > a.ManhattanDistance(WinningAsteroid))
+                            AllTheAngles[EnumerateAngle(Angle)] = a;
+                    }
+                foreach (KeyValuePair<double, Coordinate> a in AllTheAngles)
+                {
+                    AsteroidsKilled++;
+                    if (AsteroidsKilled == 199)
+                    {
+                        Sum2 = a.Value.x * 100 + a.Value.y;
+                        break;
+                    }
+                    Asteroids.Remove(a.Value);
+                }
+            }
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
         public double EnumerateAngle(Coordinate angle)
         {
-            return Math.Tan(angle.x / angle.y);
+            return Math.Atan2(angle.x,angle.y*-1);
         }
         public Coordinate GetAngle(Coordinate c)
         {
