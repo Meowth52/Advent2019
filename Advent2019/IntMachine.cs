@@ -10,7 +10,7 @@ namespace Advent2019
     {
         Dictionary<long, long> Memory;
         public List<int> Input;
-        int InputIndex = 0;
+        public int InputIndex = 0;
         public List<long> Outputs;
         long Step = 0;
         long RelativeStep;
