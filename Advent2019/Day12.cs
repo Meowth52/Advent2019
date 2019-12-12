@@ -18,17 +18,17 @@ namespace Advent2019
             List<Moon> Moons = new List<Moon>();
             HashSet<string>[] VectorSets = { new HashSet<string>(), new HashSet<string>(), new HashSet<string>() };
             int[] Match = { 0, 0, 0 };
-            string[] MatchString = { "", "","" };
+            string[] MatchString = { "", "", "" };
             foreach (List<int> l in Instructions)
             {
                 Moons.Add(new Moon(l[0], l[1], l[2]));
             }
-            for(int i =0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 foreach (Moon m in Moons)
-                    MatchString[i] += m.Dimensions[i].ToString() + m.Velocities[i].ToString(); 
+                    MatchString[i] += m.Dimensions[i].ToString() + m.Velocities[i].ToString();
             }
-            int NrOfSteps = 1000;
+            int NrOfSteps = 1000000;
             for (int i = 0; i < NrOfSteps; i++)
             {
                 foreach (Moon m in Moons)
@@ -38,7 +38,7 @@ namespace Advent2019
                         m.Gravity(o);
                     }
                 }
-                string[] VectorSet = {"","",""};
+                string[] VectorSet = { "", "", "" };
                 foreach (Moon m in Moons)
                 {
                     m.Move();
@@ -48,8 +48,8 @@ namespace Advent2019
                 for (int n = 0; n < 3; n++)
                     if (MatchString[n] == VectorSet[n])
                     {
-                        if (Match[n]==0)
-                            Match[n] = i;
+                        if (Match[n] == 0)
+                            Match[n] = i + 1;
                     }
             }
             int Sum = 0;
@@ -57,15 +57,29 @@ namespace Advent2019
             {
                 Sum += m.Energy();
             }
-            int Sum2 = 0;
-            for (int i = 1; i < 10000; i++)
-                if (i % Match[0] == 0 && i % Match[1] == 0 && i % Match[2] == 0)
-                {
-                    Sum2 = i;
-                    break;
-                }
+            long Sum2 = determineLCM(determineLCM(Match[0], Match[1]), Match[2]);
+            //for (long i = 1; i < 9223372036854775807; i++)
+            //    if (i % Match[0] == 0 && i % Match[1] == 0 && i % Match[2] == 0)
+            //    {
+
+            //        Sum2 = i;
+            //        break;
+            //    }
 
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
+        }
+        public long determineLCM(long a, long b)
+        {
+            long num1 = Math.Max(a, b);
+            long num2 = Math.Min(a, b);
+            for (long i = 1; i < num2; i++)
+            {
+                if ((num1 * i) % num2 == 0)
+                {
+                    return i * num1;
+                }
+            }
+            return num1 * num2;
         }
     }
     public class Moon
