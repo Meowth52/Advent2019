@@ -18,6 +18,7 @@ namespace Advent2019
         public override Tuple<string, string> getResult()
         {
             int Sum = RunRobot(0);
+            Hull = new Dictionary<Coordinate, int>();
             RunRobot(1);
             string Part2 = PrintHull();
             return Tuple.Create(Sum.ToString(), Part2);
@@ -53,16 +54,23 @@ namespace Advent2019
             string ReturnString = "";
             int LargestX = 0;
             int LargestY = 0;
+            int SmallestX = 1000000;
+            int SmallestY = 1000000;
             foreach (KeyValuePair<Coordinate, int> c in Hull)
             {
                 if (c.Key.x > LargestX)
                     LargestX = c.Key.x;
                 if (c.Key.y > LargestY)
                     LargestY = c.Key.y;
+                if (c.Key.x < SmallestX)
+                    SmallestX = c.Key.x;
+                if (c.Key.y < SmallestY)
+                    SmallestY = c.Key.y;
             }
-            for (int y = 0; y <= LargestY; y++)
+            ReturnString += "\n";
+            for (int x = LargestX; x >= SmallestX; x--)
             {
-                for (int x = 0; x <= LargestX; x++)
+                for (int y = SmallestY; y <= LargestY; y++)
                 {
                     Coordinate Check = new Coordinate(x, y);
                     if (Hull.ContainsKey(Check) && Hull[Check] == 1)
@@ -72,6 +80,7 @@ namespace Advent2019
                 }
                 ReturnString += "\n";
             }
+
             return ReturnString;
         }
         char UpdateHeading(char heading, int Turn)
