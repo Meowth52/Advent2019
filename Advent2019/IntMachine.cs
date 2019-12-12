@@ -9,7 +9,7 @@ namespace Advent2019
     class IntMachine
     {
         Dictionary<long, long> Memory;
-        List<int> Input;
+        public List<int> Input;
         int InputIndex = 0;
         public List<long> Outputs;
         long Step = 0;
@@ -94,6 +94,8 @@ namespace Advent2019
                         Step += 4;
                         break;
                     case 3:
+                        //if (InputIndex >= Input.Count)
+                        //    InputIndex = Input.Count - 1;
                         Memory[OpCode[2]] = Input[InputIndex];
                         InputIndex++;
                         Step += 2;
