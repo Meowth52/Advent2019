@@ -16,19 +16,26 @@ namespace Advent2019
         long RelativeStep;
         public IntMachine(List<long> _memory, int _input)
         {
-            Construct(_memory, _input);
+            Construct(_memory);
+            Input = new List<int>();
+            Input.Add(_input);
         }
         public IntMachine(List<int> _memory, int _input)
         {
             List<long> LongMem = new List<long>();
             foreach (int i in _memory)
                 LongMem.Add((long)i);
-            Construct(LongMem, _input);
-        }
-        public void Construct(List<long> _memory, int _input)
-        {
+            Construct(LongMem);
             Input = new List<int>();
             Input.Add(_input);
+        }
+        public IntMachine(List<long> _memory)
+        {
+            Construct(_memory);
+            Input = new List<int>();
+        }
+        public void Construct(List<long> _memory)
+        {
             Memory = new Dictionary<long, long>();
             for (int i = 0; i < _memory.Count; i++)
             {
@@ -40,6 +47,10 @@ namespace Advent2019
         {
             Memory[1] = Noun;
             Memory[2] = Verb;
+        }
+        public void Day13Offset(int Noun)
+        {
+            Memory[0] = Noun;
         }
         public int Run()
         {
@@ -94,8 +105,8 @@ namespace Advent2019
                         Step += 4;
                         break;
                     case 3:
-                        //if (InputIndex >= Input.Count)
-                        //    InputIndex = Input.Count - 1;
+                        if (InputIndex >= Input.Count)
+                            InputIndex = Input.Count - 1;
                         Memory[OpCode[2]] = Input[InputIndex];
                         InputIndex++;
                         Step += 2;

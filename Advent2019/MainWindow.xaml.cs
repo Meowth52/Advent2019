@@ -18,7 +18,7 @@ namespace Advent2019
 {
     public partial class MainWindow : Window
     {
-        int LastDay = 12;
+        int LastDay = 13;
         public int ChoosenDay;
         private readonly MainView _mainView;
         public MainWindow()
@@ -46,6 +46,8 @@ namespace Advent2019
                     _mainView.OutText = "Del 1: " + OutputTuple.Item1 + " och del 2: " + OutputTuple.Item2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";
                 });
             }
+            else
+                _mainView.KeyPresses += e.Key;
         }
         private void DayBoxKeyUp(object sender, KeyEventArgs e)
         {
@@ -109,6 +111,7 @@ namespace Advent2019
                     break;
                 case 13:
                     ReturnDay = new Day13(_input);
+                    ReturnDay.SetMainView(_mainView);
                     break;
                 case 14:
                     ReturnDay = new Day14(_input);

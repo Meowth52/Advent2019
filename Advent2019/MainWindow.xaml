@@ -14,7 +14,7 @@
             <ColumnDefinition Width="86*"/>
             <ColumnDefinition Width="531*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="InputBox" Height="113" Margin="33,48,656,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" KeyUp="InputBoxKeyUp" Grid.Column="1"/>
+        <TextBox x:Name="InputBox" Height="113" Margin="33,48,656,0" TextWrapping="Wrap" VerticalAlignment="Top" AcceptsReturn="True" KeyUp="InputBoxKeyUp" Grid.Column="1" Text="{Binding InText}"/>
         <TextBox x:Name="OutputBox" Height="686" Margin="33,181,58,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding OutText}" FontFamily="Global Monospace" Grid.Column="1"/>
         <TextBox x:Name="DayBox" HorizontalAlignment="Left" Height="30" Margin="10,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" AcceptsReturn="True" KeyUp="DayBoxKeyUp"/>
 
