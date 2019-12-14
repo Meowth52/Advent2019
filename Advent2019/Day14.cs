@@ -27,9 +27,23 @@ namespace Advent2019
         }
         public override Tuple<string, string> getResult()
         {
-            int Sum = 0;
+            int Sum = ReCurse("FUEL");
+
             int Sum2 = 0;
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
+        }
+        public int ReCurse(string that)
+        {
+            int RetuenValue = 0;
+            foreach(KeyValuePair<string,int> eh in Reactions[that])
+            {
+                if (eh.Key == "ORE")
+                    RetuenValue += eh.Value;
+                else if (eh.Key != that)
+                    RetuenValue += ReCurse(eh.Key) * eh.Value;
+            }
+            RetuenValue = (int)Math.Ceiling((double)RetuenValue / (double)Reactions[that].Last().Value);
+            return RetuenValue;
         }
     }
     //public class Schmenum
