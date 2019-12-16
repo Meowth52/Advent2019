@@ -45,7 +45,7 @@ namespace Advent2019
                 else if (eh.Key != that)
                     ReturnValue += GetCost(wanted - Materials[that], Reactions[that].Last().Value, ReCurse(eh.Key, eh.Value));
             }
-            Materials[that] = (int)Math.Ceiling((double)(wanted - Materials[that]) / (double)Reactions[that].Last().Value) * Reactions[that].Last().Value;
+            Materials[that] += (int)Math.Ceiling((double)(wanted - Materials[that]) / (double)Reactions[that].Last().Value) * Reactions[that].Last().Value-wanted;
             return ReturnValue;
         }
         public int GetCost(int wanted, int provided, int cost)
@@ -53,55 +53,4 @@ namespace Advent2019
             return (int)Math.Ceiling((double)wanted/(double)provided)*cost;
         }
     }
-    //public class Schmenum
-    //{
-    //    int I;
-    //    string S;
-    //    public Schmenum(int _i, string _s)
-    //    {
-    //        I = _i;
-    //        S = _s;
-    //    }
-    //    class CoordinateEqualityComparer : IEqualityComparer<Coordinate>
-    //    {
-    //        public bool Equals(Coordinate b1, Coordinate b2)
-    //        {
-    //            if (b2 == null && b1 == null)
-    //                return true;
-    //            else if (b1 == null | b2 == null)
-    //                return false;
-    //            else if (b1.x == b2.x && b1.y == b2.y)
-    //                return true;
-    //            else
-    //                return false;
-    //        }
-    //        public override int GetHashCode()
-    //        {
-    //            string hCode = I ^ y;
-    //            return hCode.GetHashCode();
-    //        }
-    //        public override bool Equals(object obj)
-    //        {
-    //            return Equals(obj as Coordinate);
-    //        }
-    //        public bool Equals(Coordinate obj)
-    //        {
-    //            return obj != null && obj.x == x && obj.y == y;
-    //        }
-    //        public int CompareTo(Coordinate other)
-    //        {
-    //            if (this.x == other.x)
-    //            {
-    //                return this.y.CompareTo(other.y);
-    //            }
-    //            return this.x.CompareTo(other.x);
-    //        }
-
-    //        public int GetHashCode(Coordinate bx)
-    //        {
-    //            int hCode = bx.x ^ bx.y;
-    //            return hCode.GetHashCode();
-    //        }
-    //    }
-    //}
 }
