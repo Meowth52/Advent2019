@@ -38,15 +38,15 @@ namespace Advent2019
         public int ReCurse(string that, int wanted)
         {
             int ReturnValue = 0;
-            foreach(KeyValuePair<string,int> eh in Reactions[that])
+            int bla = ((int)Math.Ceiling((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]);
+            foreach (KeyValuePair<string,int> eh in Reactions[that])
             {
                 if (eh.Key == "ORE")
-                    ReturnValue += ((int)Math.Ceiling((double)wanted/ (double)Reactions[that].Last().Value) - Materials[that]) * eh.Value;
+                    ReturnValue += bla * eh.Value;
                 else if (eh.Key != that)
-                    ReturnValue += ReCurse(eh.Key, ((int)Math.Ceiling((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]) * eh.Value );
+                    ReturnValue += ReCurse(eh.Key, bla * eh.Value );
             }
-            Materials[that] = ((int)Math.Ceiling((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]) - 
-                ((int)Math.Floor((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]);
+            Materials[that] = bla - ((int)Math.Floor((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]);
             return ReturnValue;
         }
         //public int GetCost(int wanted, int provided, int cost, string that)
