@@ -41,15 +41,16 @@ namespace Advent2019
             foreach(KeyValuePair<string,int> eh in Reactions[that])
             {
                 if (eh.Key == "ORE")
-                    ReturnValue += GetCost(wanted - Materials[that], Reactions[that].Last().Value, eh.Value);
+                    ReturnValue += GetCost(wanted * eh.Value - Materials[that], 1, eh.Value, that);
                 else if (eh.Key != that)
-                    ReturnValue += GetCost(wanted - Materials[that], Reactions[that].Last().Value, ReCurse(eh.Key, eh.Value));
+                    ReturnValue += GetCost(wanted * eh.Value - Materials[that], 1, ReCurse(eh.Key, eh.Value), that);
             }
-            Materials[that] += (int)Math.Ceiling((double)(wanted - Materials[that]) / (double)Reactions[that].Last().Value) * Reactions[that].Last().Value-wanted;
+            Materials[that] = (int)Math.Ceiling((double)(wanted - Materials[that]) / (double)Reactions[that].Last().Value) * Reactions[that].Last().Value - wanted;
             return ReturnValue;
         }
-        public int GetCost(int wanted, int provided, int cost)
+        public int GetCost(int wanted, int provided, int cost, string that)
         {
+            //Materials[that] = ((int)Math.Ceiling((double)wanted / (double)provided) * cost) - wanted;
             return (int)Math.Ceiling((double)wanted/(double)provided)*cost;
         }
     }
