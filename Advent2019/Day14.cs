@@ -41,17 +41,17 @@ namespace Advent2019
             foreach(KeyValuePair<string,int> eh in Reactions[that])
             {
                 if (eh.Key == "ORE")
-                    ReturnValue += GetCost(wanted * eh.Value - Materials[that], 1, eh.Value, that);
+                    ReturnValue += ((int)Math.Ceiling((double)wanted/ (double)Reactions[that].Last().Value) - Materials[that]) * eh.Value;
                 else if (eh.Key != that)
-                    ReturnValue += GetCost(wanted * eh.Value - Materials[that], 1, ReCurse(eh.Key, eh.Value), that);
+                    ReturnValue += ReCurse(eh.Key, ((int)Math.Ceiling((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]) * eh.Value );
             }
-            Materials[that] = (int)Math.Ceiling((double)(wanted - Materials[that]) / (double)Reactions[that].Last().Value) * Reactions[that].Last().Value - wanted;
+            Materials[that] = ((int)Math.Ceiling((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]) - 
+                ((int)Math.Floor((double)wanted / (double)Reactions[that].Last().Value) - Materials[that]);
             return ReturnValue;
         }
-        public int GetCost(int wanted, int provided, int cost, string that)
-        {
-            //Materials[that] = ((int)Math.Ceiling((double)wanted / (double)provided) * cost) - wanted;
-            return (int)Math.Ceiling((double)wanted/(double)provided)*cost;
-        }
+        //public int GetCost(int wanted, int provided, int cost, string that)
+        //{
+        //    return (int)Math.Ceiling((double)wanted/(double)provided)*cost;
+        //}
     }
 }
