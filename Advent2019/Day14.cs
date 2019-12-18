@@ -10,12 +10,12 @@ namespace Advent2019
     public class Day14 : Day
     {
         Dictionary<string, Dictionary<string,int>> Reactions;
-        Dictionary<string, int> Materials;
+        Dictionary<string, long> Materials;
         public Day14(string _input) : base(_input)
         {
             string[] Instructions = this.parseStringArray(_input);
             Reactions = new Dictionary<string, Dictionary<string, int>>();
-            Materials = new Dictionary<string, int>();
+            Materials = new Dictionary<string, long>();
             foreach(string s in Instructions)
             {
                 MatchCollection Matches = Regex.Matches(s, @"(-?\d+) ([A-Z]+)");
@@ -30,25 +30,28 @@ namespace Advent2019
         }
         public override Tuple<string, string> getResult()
         {
-            int Sum = ReCurse("FUEL", 1);
+            long Sum = ReCurse("FUEL", 1);
+            long Sum2 = 0;
+            while (Sum2 != 1000000000000)
+            {
 
-            int Sum2 = 0;
+            }
             return Tuple.Create(Sum.ToString(), Sum2.ToString());
         }
-        public int ReCurse(string that, int wanted)
+        public long ReCurse(string that, long wanted)
         {
-            int ReturnValue = 0;
-            int bla = ((int)Math.Ceiling(wanted / (float)Reactions[that].Last().Value) );
-            foreach (KeyValuePair<string,int> eh in Reactions[that])
+            long ReturnValue = 0;
+            long RoundUp = ((long)Math.Ceiling(wanted / (float)Reactions[that].Last().Value) );
+            foreach (KeyValuePair<string,int> Next in Reactions[that])
             {
-                if (eh.Key == "ORE")
-                    ReturnValue += bla * eh.Value;
-                else if (eh.Key != that )
+                if (Next.Key == "ORE")
+                    ReturnValue += RoundUp * Next.Value;
+                else if (Next.Key != that )
                 {
-                    ReturnValue += ReCurse(eh.Key, bla * eh.Value - Materials[eh.Key]);
+                    ReturnValue += ReCurse(Next.Key, RoundUp * Next.Value - Materials[Next.Key]);
                 }
             }
-            Materials[that] = (int)Math.Ceiling(wanted / (float)Reactions[that].Last().Value) * Reactions[that].Last().Value - (wanted );
+            Materials[that] = RoundUp * Reactions[that].Last().Value - (wanted );
             return ReturnValue;
         }
     }
