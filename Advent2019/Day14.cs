@@ -11,11 +11,12 @@ namespace Advent2019
     {
         Dictionary<string, Dictionary<string, int>> Reactions;
         Dictionary<string, long> Materials;
+        Dictionary<string, long> MaterialsClean;
         public Day14(string _input) : base(_input)
         {
             string[] Instructions = this.parseStringArray(_input);
             Reactions = new Dictionary<string, Dictionary<string, int>>();
-            Materials = new Dictionary<string, long>();
+            MaterialsClean = new Dictionary<string, long>();
             foreach (string s in Instructions)
             {
                 MatchCollection Matches = Regex.Matches(s, @"(-?\d+) ([A-Z]+)");
@@ -25,8 +26,9 @@ namespace Advent2019
                     Row.Add(m.Groups[2].Value, Int32.Parse(m.Groups[1].Value));
                 }
                 Reactions.Add(Row.Last().Key, Row);
-                Materials.Add(Row.Last().Key, 0);
+                MaterialsClean.Add(Row.Last().Key, 0);
             }
+            Materials = new Dictionary<string, long>(MaterialsClean);
         }
         public override Tuple<string, string> getResult()
         {
@@ -40,6 +42,7 @@ namespace Advent2019
             long Sum2 = 0;
             while (Fuel != LastGuess)
             {
+                Materials = new Dictionary<string, long>(MaterialsClean);
                 Ore = ReCurse("FUEL", Fuel);
                 AnotherLastGuess = Fuel;
                 if (Ore <= Target)
