@@ -34,6 +34,14 @@ namespace Advent2019
             Construct(_memory);
             Input = new List<int>();
         }
+        public IntMachine(List<int> _memory)
+        {
+            List<long> LongMem = new List<long>();
+            foreach (int i in _memory)
+                LongMem.Add((long)i);
+            Construct(LongMem);
+            Input = new List<int>();
+        }
         public void Construct(List<long> _memory)
         {
             Memory = new Dictionary<long, long>();

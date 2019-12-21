@@ -74,6 +74,10 @@ namespace Advent2019
         {
             return new Coordinate(this.x - coo.x, this.y - coo.y);
         }
+        public Position GetPosition()
+        {
+            return new Position(x,y);
+        }
         public override string ToString()
         {
             return x.ToString() + "," + y.ToString();
@@ -99,10 +103,6 @@ namespace Advent2019
                 return this.y.CompareTo(other.y);
             }
             return this.x.CompareTo(other.x);
-        }
-        public Position GetPosition()
-        {
-            return new Position(x, y);
         }
         public void Assimilate(Coordinate c)
         {
