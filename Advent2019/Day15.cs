@@ -43,14 +43,14 @@ namespace Advent2019
         {
             Dictionary<Coordinate, int> Neighbours = new Dictionary<Coordinate, int>();
             Dictionary<int, char> Directions = new Dictionary<int, char>() { {1, 'N' }, { 4, 'E' }, { 2, 'S' }, { 3, 'W' } };
-            foreach(KeyValuePair<int, char> d in Directions)
+            List<Coordinate> FoundOpen = new List<Coordinate>();
+            foreach (KeyValuePair<int, char> d in Directions)
             {
                 Coordinate Next = new Coordinate(CurrentPosition);
                 Droid.AddArgument(d.Key);
                 Droid.Run();
                 int Result = (int)Droid.Outputs.Last();
                 Next.MoveOneStep(d.Value);
-                List<Coordinate> FoundOpen = new List<Coordinate>();
                 if (Result == 0)
                 {
                     TheGrid.BlockCell(Next.GetPosition());
