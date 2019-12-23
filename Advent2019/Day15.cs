@@ -27,13 +27,13 @@ namespace Advent2019
         {
             int Sum = 0;
             CurrentPosition = new Coordinate(Max / 2, Max / 2);
-            Locations.Add(CurrentPosition, 1);
+            Locations.Add(CurrentPosition, 3);
             Droid = new IntMachine(Instructions);
             bool GetOut = false;
-            Coordinate N = new Coordinate(0, 1);
-            Coordinate S = new Coordinate(0, -1);
-            Coordinate W = new Coordinate(-1, 0);
-            Coordinate E = new Coordinate(1, 0);
+            Coordinate N = new Coordinate(1, 0);
+            Coordinate S = new Coordinate(-1, 0);
+            Coordinate W = new Coordinate(0, -1);
+            Coordinate E = new Coordinate(0, 1);
             while (!GetOut) //until this is a dead end
             {
                 Dictionary<Coordinate, int> Neighbours = GetNeighbours();
@@ -52,7 +52,7 @@ namespace Advent2019
                 }
                 if (!GetOut)
                 {
-                    Coordinate RelativePosition = CurrentPosition.RelativePosition(Neighbours.First().Key);
+                    Coordinate RelativePosition = Neighbours.First().Key.RelativePosition(CurrentPosition);
                     if (RelativePosition.IsOn(N))
                     {
                         Droid.AddArgument(1);
@@ -108,7 +108,7 @@ namespace Advent2019
                         Neighbours.Add(Next, NextType);
                     }
                     else if (Locations[Next] == 3 || Locations[Next] == 4)
-                        Neighbours.Add(Next, NextType); ;
+                        Neighbours.Add(Next, Locations[Next]);
                     int Back = 0; //tillbaka
                     switch (d.Key)
                     {
