@@ -19,14 +19,16 @@ namespace Advent2019
         public Day15(string _input) : base(_input)
         {
             Instructions = this.parseListOfInteger(_input);
-            Max = 500;
-            TheGrid = new Grid(Max, Max, 2.0f);
+            Max = 100;
+            TheGrid = new Grid(Max, Max, 1.0f);
             Locations = new Dictionary<Coordinate, int>();
         }
         public override Tuple<string, string> getResult()
         {
-            int Sum = 0;
-            CurrentPosition = new Coordinate(Max / 2, Max / 2);
+            int Sum = 1000000;
+            Coordinate StartPosition = new Coordinate(Max / 2, Max / 2);
+            CurrentPosition = new Coordinate(StartPosition);
+            Coordinate LastPosition = new Coordinate(Max / 2, Max / 2);
             Locations.Add(CurrentPosition, 3);
             Droid = new IntMachine(Instructions);
             bool GetOut = false;
@@ -52,7 +54,11 @@ namespace Advent2019
                 }
                 if (!GetOut)
                 {
-                    Coordinate RelativePosition = Neighbours.First().Key.RelativePosition(CurrentPosition);
+                    Coordinate RelativePosition;
+                    if (Neighbours.First().Key.IsOn(LastPosition))
+                        RelativePosition = Neighbours.Last().Key.RelativePosition(CurrentPosition);
+                    else
+                        RelativePosition = Neighbours.First().Key.RelativePosition(CurrentPosition);
                     if (RelativePosition.IsOn(N))
                     {
                         Droid.AddArgument(1);
@@ -73,11 +79,45 @@ namespace Advent2019
                         Droid.AddArgument(4);
                         Droid.Run();
                     }
+                    LastPosition = new Coordinate(CurrentPosition);
                     CurrentPosition.AddTo(RelativePosition);
+
                 }
             }
+            List<Coordinate> OxygenNeighbours = new List<Coordinate>();
+            foreach(KeyValuePair<Coordinate,int> on in Locations)
+            {
+                if (on.Value == 2)
+                    OxygenNeighbours.Add(new Coordinate(on.Key));
+            }
+
             int Sum2 = 0;
-            return Tuple.Create(Sum.ToString(), Sum2.ToString());
+            foreach (Coordinate o in OxygenNeighbours)
+            {
+                Position[] p = TheGrid.GetPath(o.GetPosition(), StartPosition.GetPosition(), MovementPatterns.LateralOnly);
+                Sum = p.Length;
+                foreach (KeyValuePair<Coordinate, int> l in Locations)
+                {
+                    p = TheGrid.GetPath(o.GetPosition(), l.Key.GetPosition(), MovementPatterns.LateralOnly);
+                    if (p.Length > Sum2)
+                        Sum2 = p.Length;
+                }
+            }
+            string PrintOut = "\n";
+            for (int y = 0; y<100;y++)
+            {
+                for (int x = 0; x<100;x++)
+                {
+                    Coordinate c = new Coordinate(x, y);
+                    //if (Locations.ContainsKey(c))
+                        PrintOut += TheGrid.GetCellCost(c.GetPosition());
+                            //Locations[c].ToString();
+                    //else
+                    //    PrintOut += "#";
+                }
+                PrintOut += "\n";
+            }
+            return Tuple.Create(Sum.ToString(), Sum2.ToString() + PrintOut);
         }
         public Dictionary<Coordinate, int> GetNeighbours()
         {
