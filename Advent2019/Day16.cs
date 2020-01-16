@@ -27,26 +27,62 @@ namespace Advent2019
             Signal = new List<int>(Instructions);
             for (int Phase = 0; Phase < PhaseLimit;Phase++)
             {
+                List<int> NextSignal = new List<int>();
                 List<int> Pattern = new List<int>(BasePattern);
                 for (int i = 0; i < Signal.Count; i++)
                 {
+                    int Value = 0;
                     for (int n = 0; n < Signal.Count; n++)
                     {
-
+                        Value += Signal[n] * Pattern[(n+1) % Pattern.Count];
                     }
+                    NextSignal.Add(Math.Abs(Value) % 10);
                     for(int fuu=1; fuu <= 4; fuu++)
                     {
-                        Signal.Insert(fuu * i, Signal[fuu]);
+                        Pattern.Insert((fuu * (i+1))+(fuu-1), BasePattern[fuu-1]);
                     }
                 }
+                Signal = new List<int>(NextSignal);
             }
-            int Sum = 0;
-            int Sum2 = 0;
-            return Tuple.Create(Sum.ToString(), Sum2.ToString());
+            int Sum = GetFirstNumbers(8);
+
+            //Part 2
+            List<int> BigSignal = new List<int>();
+            for (int i = 0; i < 10000; i++)
+            {
+                BigSignal.AddRange(Instructions);
+            }
+            int StartIndex =  0;
+            for (int i = 0; i <= 6; i++) //Get startIndex
+            {
+                StartIndex += Instructions[6 - i] * (int)Math.Pow(10, i);
+            }
+            Signal = new List<int>(BigSignal.GetRange(BigSignal.Count/2, BigSignal.Count/2));
+            for (int Phase = 0; Phase < PhaseLimit; Phase++)
+            {
+                List<int> NextSignal = new List<int>();
+                int Value = 0;
+                for (int i = Signal.Count-1; i >= 0; i--)
+                {
+                    Value += Signal[i];
+                    NextSignal.Add(Math.Abs(Value) % 10);
+                }
+                NextSignal.Reverse();
+                Signal = new List<int>(NextSignal);
+            }
+            StartIndex = StartIndex / 2;
+            Signal = Signal.GetRange(StartIndex,Signal.Count-StartIndex);
+            int Sum2 = GetFirstNumbers(8);
+            return Tuple.Create(Sum.ToString("D8"), Sum2.ToString());
         }
-        public int MultiplyAndCrop(int a, int b)
+        int GetFirstNumbers(int HowMany)
         {
-            return Math.Abs(a * b) % 10;
+            int ReturnValue = 0;
+            for (int i = 0; i < HowMany; i++)
+            {
+                ReturnValue += Signal[HowMany-1 - i] * (int)Math.Pow(10, i);
+            }
+            return ReturnValue;
         }
     }
 }
