@@ -70,8 +70,8 @@ namespace Advent2019
                 NextSignal.Reverse();
                 Signal = new List<int>(NextSignal);
             }
-            StartIndex = StartIndex / 2;
-            Signal = Signal.GetRange(StartIndex,Signal.Count-StartIndex);
+            StartIndex -= Signal.Count;
+            Signal = Signal.GetRange(StartIndex,8);
             int Sum2 = GetFirstNumbers(8);
             return Tuple.Create(Sum.ToString("D8"), Sum2.ToString());
         }
