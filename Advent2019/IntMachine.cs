@@ -64,10 +64,10 @@ namespace Advent2019
         {
             while (true)
             {
-                for (int i = 1;i<4;i++)
+                for (int i = 1; i < 4; i++)
                 {
                     if (!Memory.ContainsKey(Step + i))
-                    Memory.Add(Step + i, 0);
+                        Memory.Add(Step + i, 0);
                 }
                 List<long> OpCode = this.IntToList(Memory[Step]);
                 //if (Step == 20)
@@ -175,6 +175,10 @@ namespace Advent2019
         public void AddArgument(int i)
         {
             Input.Add(i);
+        }
+        public void ReplaceInput(List<int> i)
+        {
+            Input = new List<int>(i);
         }
     }
 }
